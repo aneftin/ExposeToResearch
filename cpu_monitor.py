@@ -5,7 +5,7 @@ import time
 
 
 def get_cpu_temp():
-  """Reads the CPU temperature from the Raspberry Pi thermal zone file."""
+  "Reads the CPU temperature from the Raspberry Pi thermal zone file."
   try:
     with open("/sys/class/thermal/thermal_zone0/temp", "r") as f:
       temp_str = f.read().strip()
@@ -17,6 +17,8 @@ def get_cpu_temp():
 
 
 print("Starting CPU Temperature Monitor. Press Ctrl+C to exit.\n")
+#Open the file
+f = open("cpu_log", "a", encoding="utf-8");
 
 try:
   while True:
@@ -25,8 +27,13 @@ try:
 
     if temp is not None:
       print(f"[{current_time}] | CPU Temperature: {temp:.2f} °C")
+      fwrite(f"[{current_time}] | CPU Temperature: {temp:.2f} °C")
     else:
       print(
+          f"[{current_time}] | Error: Could not read CPU temperature from thermal"
+          " zone."
+      )
+      f.write(
           f"[{current_time}] | Error: Could not read CPU temperature from thermal"
           " zone."
       )
@@ -36,3 +43,7 @@ try:
 
 except KeyboardInterrupt:
   print("\nMonitoring stopped by user.")
+
+finally:
+    # Always close the file at the end (or on error)
+    f.close();
