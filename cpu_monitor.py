@@ -26,8 +26,8 @@ try:
     temp = get_cpu_temp()
 
     if temp is not None:
-      print(f"[{current_time}] | CPU Temperature: {temp:.2f} °C")
-      fwrite(f"[{current_time}] | CPU Temperature: {temp:.2f} °C")
+      print(f"[{current_time}] | CPU Temperature: {temp:.2f} °C");
+      f.write(f"[{current_time}] | CPU Temperature: {temp:.2f} °C\n");
     else:
       print(
           f"[{current_time}] | Error: Could not read CPU temperature from thermal"
@@ -35,11 +35,11 @@ try:
       )
       f.write(
           f"[{current_time}] | Error: Could not read CPU temperature from thermal"
-          " zone."
+          " zone.\n"
       )
 
     # Wait for 10 seconds before the next reading
-    time.sleep(10)
+    time.sleep(10);
 
 except KeyboardInterrupt:
   print("\nMonitoring stopped by user.")
